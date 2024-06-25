@@ -19,22 +19,24 @@ public class AccountDAODatabase implements AccountDAO {
     }
 
     @Override
-    public Optional<Map<String, Object>> getAccountByEmail(String email) {
+    public Optional<Account> getAccountByEmail(String email) {
         String sql = "SELECT * FROM cccat16.account WHERE email = ?";
         try {
             Map<String, Object> result = jdbcTemplate.queryForMap(sql, email);
-            return Optional.of(result);
+            Account account = convertMapToAccount(result);
+            return Optional.of(account);
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
     }
 
     @Override
-    public Optional<Map<String, Object>> getAccountById(String accountId) {
+    public Optional<Account> getAccountById(String accountId) {
         String sql = "SELECT * FROM cccat16.account WHERE account_id = ?";
         try {
             Map<String, Object> result = jdbcTemplate.queryForMap(sql, UUID.fromString(accountId));
-            return Optional.of(result);
+            Account account = convertMapToAccount(result);
+            return Optional.of(account);
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
@@ -47,4 +49,19 @@ public class AccountDAODatabase implements AccountDAO {
 
         return account.getAccountId();
     }
+
+    private Account convertMapToAccount(Map<String, Object> result) {
+        if (result == null) return null;
+        Account account = new Account();
+        account.setAccountId(((UUID) result.get("account_id")).toString());
+        account.setName((String) result.get("name"));
+        account.setEmail((String) result.get("email"));
+        account.setCpf((String) result.get("cpf"));
+        account.setCarPlate((String) result.get("car_plate"));
+        account.setPassenger((Boolean) result.get("is_passenger"));
+        account.setDriver((Boolean) result.get("is_driver"));
+        return account;
+    }
+
+
 }

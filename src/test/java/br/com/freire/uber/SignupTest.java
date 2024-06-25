@@ -6,20 +6,17 @@ import br.com.freire.uber.application.Signup;
 import br.com.freire.uber.application.ValidationError;
 import br.com.freire.uber.driver.SignupRequest;
 import br.com.freire.uber.driver.SignupResponse;
-import br.com.freire.uber.resource.MailerGateway;
-import br.com.freire.uber.resource.Resource;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-public class ApplicationTest {
+public class SignupTest {
     @Autowired
     GetAccount getAccount;
     @Autowired

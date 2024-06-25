@@ -18,13 +18,13 @@ public class AccountDAOMemory implements AccountDAO {
     }
 
     @Override
-    public Optional<Map<String, Object>> getAccountByEmail(String email) {
-        return Optional.ofNullable(convertAccountToMap(this.mapAccountByAccountEmail.get(email)));
+    public Optional<Account> getAccountByEmail(String email) {
+        return Optional.ofNullable(this.mapAccountByAccountEmail.get(email));
     }
 
     @Override
-    public Optional<Map<String, Object>> getAccountById(String accountId) {
-        return Optional.ofNullable(convertAccountToMap(this.mapAccountByAccountId.get(accountId)));
+    public Optional<Account> getAccountById(String accountId) {
+        return Optional.ofNullable(this.mapAccountByAccountId.get(accountId));
     }
 
     @Override
