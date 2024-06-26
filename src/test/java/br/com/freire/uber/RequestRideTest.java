@@ -62,14 +62,13 @@ public class RequestRideTest {
         //Then
         assertEquals("requested", outputGetRide.status());
         assertEquals(outputRequestRide.rideId(), outputGetRide.rideId());
-        assertEquals(outputSignup.getAccountId(), outputGetRide.passagerId());
+        assertEquals(outputSignup.getAccountId(), outputGetRide.passengerId());
         assertEquals(inputRequestRide.fromLat(), outputGetRide.fromLat());
         assertEquals(inputRequestRide.fromLong(), outputGetRide.fromLong());
         assertEquals(inputRequestRide.toLat(), outputGetRide.toLat());
         assertEquals(inputRequestRide.toLong(), outputGetRide.toLong());
-
-/*        assertEquals(expectedName, outputGetRide.passagerName);
-        assertEquals(expectedEmail, outputGetRide.email);*/
+        assertEquals(expectedName, outputGetRide.passengerName());
+        assertEquals(expectedEmail, outputGetRide.passengerEmail());
     }
 
     @Test

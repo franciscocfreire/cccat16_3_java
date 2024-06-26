@@ -8,5 +8,5 @@ public interface RideDAO {
     void saveRide(Ride ride);
 
     Optional<Ride> getRideById(String rideId);
-    //boolean hasActiveRideByPassagerId(String passagerId);
+    //boolean hasActiveRideByPassengerId(String passengerId);
 }

@@ -11,7 +11,7 @@ import java.util.UUID;
 @Getter
 public class Ride {
     private UUID rideId;
-    private UUID passagerId;
+    private UUID passengerId;
     private BigDecimal fromLat;
     private BigDecimal fromLong;
     private BigDecimal toLat;

@@ -23,7 +23,7 @@ public class RideDAODatabase implements RideDAO {
     @Override
     public void saveRide(Ride ride) {
         jdbcTemplate.update("INSERT INTO cccat16.ride (ride_id, passenger_id, from_lat, from_long, to_lat, to_long, status, date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                ride.getRideId(), ride.getPassagerId(), ride.getFromLat(), ride.getFromLong(), ride.getToLat(), ride.getToLong(), ride.getStatus(), ride.getDate());
+                ride.getRideId(), ride.getPassengerId(), ride.getFromLat(), ride.getFromLong(), ride.getToLat(), ride.getToLong(), ride.getStatus(), ride.getDate());
     }
 
     @Override
@@ -39,7 +39,7 @@ public class RideDAODatabase implements RideDAO {
     }
 
 /*    @Override
-    public boolean hasActiveRideByPassagerId(String passagerId) {
+    public boolean hasActiveRideByPassengerId(String passengerId) {
         return false;
     }*/
 
@@ -47,7 +47,7 @@ public class RideDAODatabase implements RideDAO {
         if (result == null) return null;
         Ride ride = new Ride();
         ride.setRideId(((UUID) result.get("ride_id")));
-        ride.setPassagerId((UUID) result.get("passenger_id"));
+        ride.setPassengerId((UUID) result.get("passenger_id"));
         ride.setStatus((String) result.get("status"));
         ride.setFromLat(((BigDecimal) result.get("from_lat")));
         ride.setFromLong(((BigDecimal) result.get("from_long")));

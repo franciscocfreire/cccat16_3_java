@@ -19,7 +19,7 @@ public class ResquestRide {
 
     public OutputRequestRide execute(InputRequestRide input){
 
-        var optionalAccount = accountDAO.getAccountById(input.passagerId);
+        var optionalAccount = accountDAO.getAccountById(input.passengerId);
         if (optionalAccount.isEmpty()) {
             throw new ValidationError("Account not found", -5);
         }
@@ -28,8 +28,8 @@ public class ResquestRide {
         if (!account.isPassenger()) {
             throw new ValidationError("Account is not from passenger", -6);
         }
-        /*var hasActiveRide = rideDAO.hasActiveRideByPassagerId(account.getAccountId());
-        if(hasActiveRide) throw new ValidationError("Passager has an active ride", -7);*/
+        /*var hasActiveRide = rideDAO.hasActiveRideByPassengerId(account.getAccountId());
+        if(hasActiveRide) throw new ValidationError("Passenger has an active ride", -7);*/
         Ride ride = new Ride();
         ride.setRideId(UUID.randomUUID());
         ride.setStatus("requested");
@@ -38,12 +38,12 @@ public class ResquestRide {
         ride.setFromLong(input.fromLong);
         ride.setToLat(input.toLat);
         ride.setToLong(input.toLong);
-        ride.setPassagerId(UUID.fromString(input.passagerId));
+        ride.setPassengerId(UUID.fromString(input.passengerId));
         rideDAO.saveRide(ride);
 
         return new OutputRequestRide(ride.getRideId().toString());
     }
 
-    public record InputRequestRide(String passagerId, BigDecimal fromLat, BigDecimal fromLong, BigDecimal toLat, BigDecimal toLong){}
+    public record InputRequestRide(String passengerId, BigDecimal fromLat, BigDecimal fromLong, BigDecimal toLat, BigDecimal toLong){}
     public record OutputRequestRide(String rideId){}
 }
