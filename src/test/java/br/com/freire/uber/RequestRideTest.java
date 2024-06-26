@@ -6,15 +6,16 @@ import br.com.freire.uber.application.ValidationError;
 import br.com.freire.uber.driver.SignupRequest;
 import br.com.freire.uber.driver.SignupResponse;
 import br.com.freire.uber.resource.AccountDAO;
+import br.com.freire.uber.resource.RideDAO;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class RequestRideTest {
@@ -25,10 +26,10 @@ public class RequestRideTest {
     ObjectMapper objectMapper;
     @Autowired
     AccountDAO accountDAO;
+    @Mock
+    RideDAO rideDAO;
 
-
-
-/*    @Test
+    @Test
     @DisplayName("Deve solicitar uma corrida")
     public void solicitarUmaCorrida() {
         //Given
@@ -46,13 +47,13 @@ public class RequestRideTest {
         var requestRide = new ResquestRide(accountDAO, rideDAO);
         ResquestRide.InputRequestRide inputRequestRide = new ResquestRide.InputRequestRide(
                 responseSignup.getAccountId(),
-        -27.584905257808835,
-        -48.545022195325124,
-        -27.496887588317275,
-        -48.522234807851476);
+                -27.584905257808835,
+                -48.545022195325124,
+                -27.496887588317275,
+                -48.522234807851476);
         var outputRequestRide = requestRide.execute(inputRequestRide);
         assertNotNull(outputRequestRide.rideId());
-        var getRide = new GetRide(accountDAO, rideDAO);
+/*        var getRide = new GetRide(accountDAO, rideDAO);
         var inputGetRide = new InputGetRide();
         inputGetRide.setRideId(outputRequestRide.rideId);
         //When
@@ -60,8 +61,8 @@ public class RequestRideTest {
         //Then
         assertEquals("requested", outputGetRide.status);
         assertEquals(expectedName, outputGetRide.passagerName);
-        assertEquals(expectedEmail, outputGetRide.email);
-    }*/
+        assertEquals(expectedEmail, outputGetRide.email);*/
+    }
 
     @Test
     @DisplayName("Não deve poder solicitar uma corrida senão for um passageiro")
@@ -80,7 +81,7 @@ public class RequestRideTest {
         request.setCarPlate("AAA9999");
         SignupResponse responseSignup = signup.execute(objectMapper.convertValue(request, new TypeReference<>() {
         }));
-        var requestRide = new ResquestRide(accountDAO);
+        var requestRide = new ResquestRide(accountDAO, rideDAO);
         ResquestRide.InputRequestRide inputRequestRide = new ResquestRide.InputRequestRide(
                 responseSignup.getAccountId(),
                 -27.584905257808835,
@@ -88,13 +89,10 @@ public class RequestRideTest {
                 -27.496887588317275,
                 -48.522234807851476);
 
-        ValidationError validationError = assertThrows(ValidationError.class, () -> {
-            requestRide.execute(objectMapper.convertValue(inputRequestRide, new TypeReference<>() {
-            }));
-        });
+        ValidationError validationError = assertThrows(ValidationError.class, () -> requestRide.execute(objectMapper.convertValue(inputRequestRide, new TypeReference<>() {
+        })));
 
         assertEquals(expectedError, validationError.getErrorCode());
-
 
 
     }
