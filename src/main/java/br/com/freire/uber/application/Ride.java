@@ -3,6 +3,7 @@ package br.com.freire.uber.application;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -10,11 +11,11 @@ import java.util.UUID;
 @Getter
 public class Ride {
     private UUID rideId;
-    private String passagerId;
-    private double fromLat;
-    private double fromLong;
-    private double toLat;
-    private double toLong;
+    private UUID passagerId;
+    private BigDecimal fromLat;
+    private BigDecimal fromLong;
+    private BigDecimal toLat;
+    private BigDecimal toLong;
     private String status;
     private LocalDateTime date;
 

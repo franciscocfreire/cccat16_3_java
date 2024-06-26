@@ -3,6 +3,7 @@ package br.com.freire.uber.application;
 import br.com.freire.uber.resource.AccountDAO;
 import br.com.freire.uber.resource.RideDAO;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -37,12 +38,12 @@ public class ResquestRide {
         ride.setFromLong(input.fromLong);
         ride.setToLat(input.toLat);
         ride.setToLong(input.toLong);
-        ride.setPassagerId(input.passagerId);
+        ride.setPassagerId(UUID.fromString(input.passagerId));
         rideDAO.saveRide(ride);
 
         return new OutputRequestRide(ride.getRideId().toString());
     }
 
-    public record InputRequestRide(String passagerId, double fromLat, double fromLong, double toLat, double toLong){}
+    public record InputRequestRide(String passagerId, BigDecimal fromLat, BigDecimal fromLong, BigDecimal toLat, BigDecimal toLong){}
     public record OutputRequestRide(String rideId){}
 }

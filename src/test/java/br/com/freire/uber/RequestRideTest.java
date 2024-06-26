@@ -1,5 +1,6 @@
 package br.com.freire.uber;
 
+import br.com.freire.uber.application.GetRide;
 import br.com.freire.uber.application.ResquestRide;
 import br.com.freire.uber.application.Signup;
 import br.com.freire.uber.application.ValidationError;
@@ -11,9 +12,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,7 +28,7 @@ public class RequestRideTest {
     ObjectMapper objectMapper;
     @Autowired
     AccountDAO accountDAO;
-    @Mock
+    @Autowired
     RideDAO rideDAO;
 
     @Test
@@ -42,25 +44,31 @@ public class RequestRideTest {
         request.setCpf(expectedCpf);
         request.setPassenger(true);
         request.setDriver(false);
-        SignupResponse responseSignup = signup.execute(objectMapper.convertValue(request, new TypeReference<>() {
+        SignupResponse outputSignup = signup.execute(objectMapper.convertValue(request, new TypeReference<>() {
         }));
         var requestRide = new ResquestRide(accountDAO, rideDAO);
         ResquestRide.InputRequestRide inputRequestRide = new ResquestRide.InputRequestRide(
-                responseSignup.getAccountId(),
-                -27.584905257808835,
-                -48.545022195325124,
-                -27.496887588317275,
-                -48.522234807851476);
+                outputSignup.getAccountId(),
+                BigDecimal.valueOf(-27.584905257808835),
+                BigDecimal.valueOf(-48.545022195325124),
+                BigDecimal.valueOf(-27.496887588317275),
+                BigDecimal.valueOf(-48.522234807851476));
         var outputRequestRide = requestRide.execute(inputRequestRide);
         assertNotNull(outputRequestRide.rideId());
-/*        var getRide = new GetRide(accountDAO, rideDAO);
-        var inputGetRide = new InputGetRide();
-        inputGetRide.setRideId(outputRequestRide.rideId);
+        var getRide = new GetRide(accountDAO, rideDAO);
+        var inputGetRide = new GetRide.InputGetRide(outputRequestRide.rideId());
         //When
         var outputGetRide = getRide.execute(inputGetRide);
         //Then
-        assertEquals("requested", outputGetRide.status);
-        assertEquals(expectedName, outputGetRide.passagerName);
+        assertEquals("requested", outputGetRide.status());
+        assertEquals(outputRequestRide.rideId(), outputGetRide.rideId());
+        assertEquals(outputSignup.getAccountId(), outputGetRide.passagerId());
+        assertEquals(inputRequestRide.fromLat(), outputGetRide.fromLat());
+        assertEquals(inputRequestRide.fromLong(), outputGetRide.fromLong());
+        assertEquals(inputRequestRide.toLat(), outputGetRide.toLat());
+        assertEquals(inputRequestRide.toLong(), outputGetRide.toLong());
+
+/*        assertEquals(expectedName, outputGetRide.passagerName);
         assertEquals(expectedEmail, outputGetRide.email);*/
     }
 
@@ -84,16 +92,14 @@ public class RequestRideTest {
         var requestRide = new ResquestRide(accountDAO, rideDAO);
         ResquestRide.InputRequestRide inputRequestRide = new ResquestRide.InputRequestRide(
                 responseSignup.getAccountId(),
-                -27.584905257808835,
-                -48.545022195325124,
-                -27.496887588317275,
-                -48.522234807851476);
+                BigDecimal.valueOf(-27.584905257808835),
+                BigDecimal.valueOf(-48.545022195325124),
+                BigDecimal.valueOf(-27.496887588317275),
+                BigDecimal.valueOf(-48.522234807851476));
 
         ValidationError validationError = assertThrows(ValidationError.class, () -> requestRide.execute(objectMapper.convertValue(inputRequestRide, new TypeReference<>() {
         })));
 
         assertEquals(expectedError, validationError.getErrorCode());
-
-
     }
 }

@@ -1,8 +1,15 @@
 package br.com.freire.uber.resource;
 
 import br.com.freire.uber.application.Ride;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public class RideDAODatabase implements RideDAO {
@@ -19,8 +26,39 @@ public class RideDAODatabase implements RideDAO {
                 ride.getRideId(), ride.getPassagerId(), ride.getFromLat(), ride.getFromLong(), ride.getToLat(), ride.getToLong(), ride.getStatus(), ride.getDate());
     }
 
+    @Override
+    public Optional<Ride> getRideById(String rideId) {
+        String sql = "SELECT * FROM cccat16.ride WHERE ride_id = ?";
+        try {
+            Map<String, Object> result = jdbcTemplate.queryForMap(sql, UUID.fromString(rideId));
+            Ride ride = convertMapToRide(result);
+            return Optional.of(ride);
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
 /*    @Override
     public boolean hasActiveRideByPassagerId(String passagerId) {
         return false;
     }*/
+
+    private Ride convertMapToRide(Map<String, Object> result) {
+        if (result == null) return null;
+        Ride ride = new Ride();
+        ride.setRideId(((UUID) result.get("ride_id")));
+        ride.setPassagerId((UUID) result.get("passenger_id"));
+        ride.setStatus((String) result.get("status"));
+        ride.setFromLat(((BigDecimal) result.get("from_lat")));
+        ride.setFromLong(((BigDecimal) result.get("from_long")));
+        ride.setToLat(((BigDecimal) result.get("to_lat")));
+        ride.setToLong(((BigDecimal) result.get("to_long")));
+        Timestamp timestamp = (Timestamp) result.get("date");
+        if (timestamp != null) {
+            ride.setDate(timestamp.toLocalDateTime());
+        }
+        return ride;
+
+
+    }
 }
