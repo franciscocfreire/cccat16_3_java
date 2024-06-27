@@ -5,7 +5,6 @@ import br.com.freire.uber.infrastructure.gateway.MailerGateway;
 import br.com.freire.uber.infrastructure.gateway.MailerGatewayMemory;
 import br.com.freire.uber.infrastructure.repository.AccountRepository;
 import br.com.freire.uber.infrastructure.repository.AccountRepositoryDatabase;
-import br.com.freire.uber.infrastructure.repository.Resource;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -30,8 +29,7 @@ public class Cli {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         AccountRepository accountRepository = new AccountRepositoryDatabase(jdbcTemplate);
         MailerGateway mailerGateway = new MailerGatewayMemory();
-        Resource resource = new Resource(accountRepository);
-        Signup signup = new Signup(resource, mailerGateway);
+        Signup signup = new Signup(accountRepository, mailerGateway);
 
         while (true) {
             command = scanner.nextLine();

@@ -1,13 +1,12 @@
 package br.com.freire.uber;
 
 import br.com.freire.uber.domain.Account;
-import br.com.freire.uber.infrastructure.repository.Resource;
+import br.com.freire.uber.infrastructure.repository.AccountRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class AccountRepositoryTest {
 
     @Autowired
-    Resource resource;
+    AccountRepository accountRepository;
 
     @Test
     @DisplayName("Deve salvar um registro na tabela account e consultar por id")
@@ -29,17 +28,17 @@ class AccountRepositoryTest {
 
         Account account = Account.create(expectedName, expectedEmail,expectedCpf, null,true, false );
 
-        UUID accountId = resource.saveAccount(account);
+        UUID accountId = accountRepository.saveAccount(account);
 
-        Optional<Map<String, Object>> optionalSavedAccountById = resource.getAccountById(accountId);
+        Optional<Account> optionalSavedAccountById = accountRepository.getAccountById(accountId);
 
         assertTrue(optionalSavedAccountById.isPresent(), "Esperado que a conta salva esteja presente");
 
-        Map<String, Object> savedAccountById = optionalSavedAccountById.get();
+        Account savedAccountById = optionalSavedAccountById.get();
 
-        assertEquals(expectedName, savedAccountById.get("name"));
-        assertEquals(expectedEmail, savedAccountById.get("email"));
-        assertEquals(expectedCpf, savedAccountById.get("cpf"));
+        assertEquals(expectedName, savedAccountById.getName());
+        assertEquals(expectedEmail, savedAccountById.getEmail());
+        assertEquals(expectedCpf, savedAccountById.getCpf());
     }
 
     @Test
@@ -53,17 +52,17 @@ class AccountRepositoryTest {
         boolean expectedIsDriver = false;
 
         Account account = Account.create(expectedName, expectedEmail, expectedCpf, expectedCarPlate, expectedIsPassenger, expectedIsDriver);
-        resource.saveAccount(account);
+        accountRepository.saveAccount(account);
 
-        Optional<Map<String, Object>> optionalSavedAccountByEmail = resource.getAccountByEmail(expectedEmail);
+        Optional<Account> optionalSavedAccountByEmail = accountRepository.getAccountByEmail(expectedEmail);
 
         assertTrue(optionalSavedAccountByEmail.isPresent(), "Esperado que a conta salva esteja presente");
 
-        Map<String, Object> savedAccountByEmail = optionalSavedAccountByEmail.get();
+        Account savedAccountByEmail = optionalSavedAccountByEmail.get();
 
-        assertEquals(expectedName, savedAccountByEmail.get("name"));
-        assertEquals(expectedEmail, savedAccountByEmail.get("email"));
-        assertEquals(expectedCpf, savedAccountByEmail.get("cpf"));
+        assertEquals(expectedName, savedAccountByEmail.getName());
+        assertEquals(expectedEmail, savedAccountByEmail.getEmail());
+        assertEquals(expectedCpf, savedAccountByEmail.getCpf());
     }
 
 

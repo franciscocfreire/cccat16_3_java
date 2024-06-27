@@ -1,28 +1,28 @@
 package br.com.freire.uber.application.usecase;
 
 import br.com.freire.uber.domain.Account;
-import br.com.freire.uber.infrastructure.repository.Resource;
+import br.com.freire.uber.infrastructure.repository.AccountRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @Component
 public class GetAccount {
-    private final Resource resource;
+    private final AccountRepository accountRepository;
 
-    public GetAccount(Resource resource) {
-        this.resource = resource;
+    public GetAccount(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
 
     public Account getAccount(UUID accountId) {
-        return resource.getAccountById(accountId).map(result -> Account.restore(
-                ((UUID) result.get("account_id")),
-                (String) result.get("name"),
-                (String) result.get("email"),
-                (String) result.get("cpf"),
-                (String) result.get("car_plate"),
-                (Boolean) result.get("is_passenger"),
-                (Boolean) result.get("is_driver")))
+        return accountRepository.getAccountById(accountId).map(result -> Account.restore(
+                result.getAccountId(),
+                result.getName(),
+                result.getEmail(),
+                result.getCpf(),
+                result.getCarPlate(),
+                result.isPassenger(),
+                result.isDriver()))
                 .orElse(null);
     }
 }
