@@ -1,4 +1,4 @@
-package br.com.freire.uber.driver;
+package br.com.freire.uber.infrastructure.http;
 
 import br.com.freire.uber.domain.Account;
 import br.com.freire.uber.application.usecase.GetAccount;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-public class Api {
+public class AccountController {
 
     @Autowired
     GetAccount getAccount;

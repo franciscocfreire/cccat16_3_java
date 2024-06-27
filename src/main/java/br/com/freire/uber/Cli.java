@@ -1,8 +1,9 @@
-package br.com.freire.uber.driver;
+package br.com.freire.uber;
 
 import br.com.freire.uber.application.usecase.Signup;
 import br.com.freire.uber.infrastructure.gateway.MailerGateway;
 import br.com.freire.uber.infrastructure.gateway.MailerGatewayMemory;
+import br.com.freire.uber.infrastructure.http.SignupResponse;
 import br.com.freire.uber.infrastructure.repository.AccountRepository;
 import br.com.freire.uber.infrastructure.repository.AccountRepositoryDatabase;
 import com.fasterxml.jackson.core.JsonProcessingException;

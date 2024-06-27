@@ -1,8 +1,8 @@
 package br.com.freire.uber;
 
-import br.com.freire.uber.driver.ErrorResponse;
-import br.com.freire.uber.driver.SignupRequest;
-import br.com.freire.uber.driver.SignupResponse;
+import br.com.freire.uber.infrastructure.http.ErrorResponse;
+import br.com.freire.uber.infrastructure.http.SignupRequest;
+import br.com.freire.uber.infrastructure.http.SignupResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.util.AssertionErrors.fail;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ApiTests {
+public class AccountControllerTests {
 
     @LocalServerPort
     private int port;

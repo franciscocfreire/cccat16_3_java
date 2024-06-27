@@ -1,10 +1,12 @@
-package br.com.freire.uber.driver;
+package br.com.freire.uber.infrastructure.http;
 
+import lombok.Getter;
+
+@Getter
 public class SignupResponse {
     private String accountId;
     private int errorCode;
 
-    // Construtor padrão
     public SignupResponse() {
     }
 
@@ -14,13 +16,5 @@ public class SignupResponse {
 
     public SignupResponse(int errorCode) {
         this.errorCode = errorCode;
-    }
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public int getErrorCode() {
-        return errorCode;
     }
 }

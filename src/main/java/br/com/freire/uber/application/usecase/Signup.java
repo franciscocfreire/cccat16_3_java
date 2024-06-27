@@ -2,8 +2,8 @@ package br.com.freire.uber.application.usecase;
 
 import br.com.freire.uber.domain.Account;
 import br.com.freire.uber.domain.exceptions.ValidationError;
-import br.com.freire.uber.driver.SignupRequest;
-import br.com.freire.uber.driver.SignupResponse;
+import br.com.freire.uber.infrastructure.http.SignupRequest;
+import br.com.freire.uber.infrastructure.http.SignupResponse;
 import br.com.freire.uber.infrastructure.gateway.MailerGateway;
 import br.com.freire.uber.infrastructure.repository.AccountRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
