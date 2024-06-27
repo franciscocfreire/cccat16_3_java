@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -52,19 +53,22 @@ public class RideDAODatabase implements RideDAO {
 
     private Ride convertMapToRide(Map<String, Object> result) {
         if (result == null) return null;
-        Ride ride = new Ride();
-        ride.setRideId(((UUID) result.get("ride_id")));
-        ride.setPassengerId((UUID) result.get("passenger_id"));
-        ride.setStatus((String) result.get("status"));
-        ride.setFromLat(((BigDecimal) result.get("from_lat")));
-        ride.setFromLong(((BigDecimal) result.get("from_long")));
-        ride.setToLat(((BigDecimal) result.get("to_lat")));
-        ride.setToLong(((BigDecimal) result.get("to_long")));
         Timestamp timestamp = (Timestamp) result.get("date");
+        LocalDateTime date = null;
         if (timestamp != null) {
-            ride.setDate(timestamp.toLocalDateTime());
+            date = timestamp.toLocalDateTime();
         }
-        return ride;
+
+        return Ride.restore(
+        (UUID) result.get("ride_id"),
+        (UUID) result.get("passenger_id"),
+        ((BigDecimal) result.get("from_lat")),
+        ((BigDecimal) result.get("from_long")),
+        ((BigDecimal) result.get("to_lat")),
+        ((BigDecimal) result.get("to_long")),
+        (String) result.get("status"),
+        date
+        );
 
 
     }
