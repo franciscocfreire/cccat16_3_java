@@ -1,6 +1,6 @@
-package br.com.freire.uber.resource;
+package br.com.freire.uber.infrastructure.repository;
 
-import br.com.freire.uber.application.Ride;
+import br.com.freire.uber.domain.Ride;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

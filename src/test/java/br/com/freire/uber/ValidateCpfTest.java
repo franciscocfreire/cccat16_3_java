@@ -1,6 +1,6 @@
 package br.com.freire.uber;
 
-import br.com.freire.uber.application.CpfValidator;
+import br.com.freire.uber.domain.ValidateCpf;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class CpfValidatorTest {
+public class ValidateCpfTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
@@ -17,7 +17,7 @@ public class CpfValidatorTest {
             "87748248800"
     })
     void deveTestarCpfValido(String cpf) {
-        assertTrue(CpfValidator.validate(cpf));
+        assertTrue(ValidateCpf.validate(cpf));
     }
 
     @ParameterizedTest
@@ -28,6 +28,6 @@ public class CpfValidatorTest {
             "1234566789123456789"
     })
     void deveTestarCpfInvalido(String cpf) {
-        assertFalse(CpfValidator.validate(cpf));
+        assertFalse(ValidateCpf.validate(cpf));
     }
 }

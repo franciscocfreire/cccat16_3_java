@@ -1,7 +1,11 @@
 package br.com.freire.uber.driver;
 
-import br.com.freire.uber.application.Signup;
-import br.com.freire.uber.resource.*;
+import br.com.freire.uber.application.usecase.Signup;
+import br.com.freire.uber.infrastructure.gateway.MailerGateway;
+import br.com.freire.uber.infrastructure.gateway.MailerGatewayMemory;
+import br.com.freire.uber.infrastructure.repository.AccountRepository;
+import br.com.freire.uber.infrastructure.repository.AccountRepositoryDatabase;
+import br.com.freire.uber.infrastructure.repository.Resource;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

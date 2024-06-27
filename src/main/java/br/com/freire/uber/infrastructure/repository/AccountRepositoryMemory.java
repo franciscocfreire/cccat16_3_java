@@ -1,6 +1,6 @@
-package br.com.freire.uber.resource;
+package br.com.freire.uber.infrastructure.repository;
 
-import br.com.freire.uber.application.Account;
+import br.com.freire.uber.domain.Account;
 
 import java.util.HashMap;
 import java.util.Map;

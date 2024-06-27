@@ -1,9 +1,9 @@
 package br.com.freire.uber;
 
-import br.com.freire.uber.resource.AccountRepository;
-import br.com.freire.uber.resource.AccountRepositoryMemory;
-import br.com.freire.uber.resource.MailerGateway;
-import br.com.freire.uber.resource.MailerGatewayMemory;
+import br.com.freire.uber.infrastructure.repository.AccountRepository;
+import br.com.freire.uber.infrastructure.repository.AccountRepositoryMemory;
+import br.com.freire.uber.infrastructure.gateway.MailerGateway;
+import br.com.freire.uber.infrastructure.gateway.MailerGatewayMemory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

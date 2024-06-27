@@ -1,13 +1,13 @@
 package br.com.freire.uber;
 
-import br.com.freire.uber.application.GetRide;
-import br.com.freire.uber.application.ResquestRide;
-import br.com.freire.uber.application.Signup;
-import br.com.freire.uber.application.ValidationError;
+import br.com.freire.uber.application.usecase.GetRide;
+import br.com.freire.uber.application.usecase.ResquestRide;
+import br.com.freire.uber.application.usecase.Signup;
+import br.com.freire.uber.domain.exceptions.ValidationError;
 import br.com.freire.uber.driver.SignupRequest;
 import br.com.freire.uber.driver.SignupResponse;
-import br.com.freire.uber.resource.AccountRepository;
-import br.com.freire.uber.resource.RideRepository;
+import br.com.freire.uber.infrastructure.repository.AccountRepository;
+import br.com.freire.uber.infrastructure.repository.RideRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;

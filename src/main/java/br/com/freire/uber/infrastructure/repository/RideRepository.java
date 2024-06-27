@@ -1,6 +1,6 @@
-package br.com.freire.uber.resource;
+package br.com.freire.uber.infrastructure.repository;
 
-import br.com.freire.uber.application.Ride;
+import br.com.freire.uber.domain.Ride;
 
 import java.util.Optional;
 import java.util.UUID;

@@ -1,9 +1,9 @@
 package br.com.freire.uber;
 
-import br.com.freire.uber.application.Account;
-import br.com.freire.uber.application.GetAccount;
-import br.com.freire.uber.application.Signup;
-import br.com.freire.uber.application.ValidationError;
+import br.com.freire.uber.domain.Account;
+import br.com.freire.uber.application.usecase.GetAccount;
+import br.com.freire.uber.application.usecase.Signup;
+import br.com.freire.uber.domain.exceptions.ValidationError;
 import br.com.freire.uber.driver.SignupRequest;
 import br.com.freire.uber.driver.SignupResponse;
 import com.fasterxml.jackson.core.type.TypeReference;

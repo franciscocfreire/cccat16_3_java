@@ -1,4 +1,4 @@
-package br.com.freire.uber.application;
+package br.com.freire.uber.domain;
 
 import lombok.Getter;
 

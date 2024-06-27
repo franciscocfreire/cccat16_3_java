@@ -1,11 +1,10 @@
-package br.com.freire.uber.application;
+package br.com.freire.uber.domain;
 
+import br.com.freire.uber.domain.exceptions.ValidationError;
 import lombok.Getter;
 
 import java.util.UUID;
 import java.util.regex.Pattern;
-
-import static br.com.freire.uber.application.ValidateCpf.validateCpf;
 
 @Getter
 public class Account {
@@ -27,7 +26,7 @@ public class Account {
         this.isDriver = isDriver;
         if (!(Pattern.matches("[a-zA-Z]+ [a-zA-Z]+", this.getName()))) throw new ValidationError("Invalid name", -3);
         if (!Pattern.matches("^(.+)@(.+)$", this.getEmail())) throw new ValidationError("Invalid email", -2);
-        if (!validateCpf(this.getCpf())) throw new ValidationError("Invalid CPF", -1);
+        if (!ValidateCpf.validate(this.getCpf())) throw new ValidationError("Invalid CPF", -1);
         if (this.isDriver() && !this.getCarPlate().isEmpty() && !Pattern.matches("[A-Z]{3}[0-9]{4}", this.getCarPlate()))
             throw new ValidationError("Invalid car plate", -5);
     }

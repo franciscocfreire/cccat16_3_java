@@ -1,5 +1,8 @@
-package br.com.freire.uber.application;
+package br.com.freire.uber.domain.exceptions;
 
+import lombok.Getter;
+
+@Getter
 public class ValidationError extends RuntimeException {
     int errorCode;
     public ValidationError(String message, int errorCode) {
@@ -7,7 +10,4 @@ public class ValidationError extends RuntimeException {
         this.errorCode = errorCode;
     }
 
-    public int getErrorCode() {
-        return this.errorCode;
-    }
 }

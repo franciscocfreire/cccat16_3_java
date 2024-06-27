@@ -1,6 +1,7 @@
-package br.com.freire.uber.application;
+package br.com.freire.uber.application.usecase;
 
-import br.com.freire.uber.resource.Resource;
+import br.com.freire.uber.domain.Account;
+import br.com.freire.uber.infrastructure.repository.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;

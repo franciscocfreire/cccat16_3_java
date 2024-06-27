@@ -1,7 +1,8 @@
-package br.com.freire.uber.application;
+package br.com.freire.uber.application.usecase;
 
-import br.com.freire.uber.resource.AccountRepository;
-import br.com.freire.uber.resource.RideRepository;
+import br.com.freire.uber.domain.exceptions.ValidationError;
+import br.com.freire.uber.infrastructure.repository.AccountRepository;
+import br.com.freire.uber.infrastructure.repository.RideRepository;
 
 import java.math.BigDecimal;
 

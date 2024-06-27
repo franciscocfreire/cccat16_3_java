@@ -1,12 +1,12 @@
 package br.com.freire.uber;
 
-import br.com.freire.uber.application.Account;
-import br.com.freire.uber.application.GetAccount;
-import br.com.freire.uber.application.Signup;
+import br.com.freire.uber.domain.Account;
+import br.com.freire.uber.application.usecase.GetAccount;
+import br.com.freire.uber.application.usecase.Signup;
 import br.com.freire.uber.driver.SignupRequest;
 import br.com.freire.uber.driver.SignupResponse;
-import br.com.freire.uber.resource.MailerGateway;
-import br.com.freire.uber.resource.Resource;
+import br.com.freire.uber.infrastructure.gateway.MailerGateway;
+import br.com.freire.uber.infrastructure.repository.Resource;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;

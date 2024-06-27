@@ -1,6 +1,6 @@
-package br.com.freire.uber.application;
+package br.com.freire.uber.domain;
 
-public class CpfValidator {
+public class ValidateCpf {
 
     public static boolean validate(String cpf) {
         if (cpf == null) {

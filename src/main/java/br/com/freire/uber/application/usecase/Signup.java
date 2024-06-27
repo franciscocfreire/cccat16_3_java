@@ -1,9 +1,11 @@
-package br.com.freire.uber.application;
+package br.com.freire.uber.application.usecase;
 
+import br.com.freire.uber.domain.Account;
+import br.com.freire.uber.domain.exceptions.ValidationError;
 import br.com.freire.uber.driver.SignupRequest;
 import br.com.freire.uber.driver.SignupResponse;
-import br.com.freire.uber.resource.MailerGateway;
-import br.com.freire.uber.resource.Resource;
+import br.com.freire.uber.infrastructure.gateway.MailerGateway;
+import br.com.freire.uber.infrastructure.repository.Resource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 

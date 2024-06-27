@@ -1,4 +1,4 @@
-package br.com.freire.uber.resource;
+package br.com.freire.uber.infrastructure.gateway;
 
 
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
 package br.com.freire.uber;
 
-import br.com.freire.uber.application.Account;
-import br.com.freire.uber.resource.Resource;
+import br.com.freire.uber.domain.Account;
+import br.com.freire.uber.infrastructure.repository.Resource;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-class ResourceTest {
+class AccountRepositoryTest {
 
     @Autowired
     Resource resource;
