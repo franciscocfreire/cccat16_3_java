@@ -28,8 +28,8 @@ public class ResquestRide {
         if (!account.isPassenger()) {
             throw new ValidationError("Account is not from passenger", -6);
         }
-        /*var hasActiveRide = rideDAO.hasActiveRideByPassengerId(account.getAccountId());
-        if(hasActiveRide) throw new ValidationError("Passenger has an active ride", -7);*/
+        var hasActiveRide = rideDAO.hasActiveRideByPassengerId(account.getAccountId());
+        if(hasActiveRide) throw new ValidationError("Passenger has an active ride", -7);
         Ride ride = new Ride();
         ride.setRideId(UUID.randomUUID());
         ride.setStatus("requested");

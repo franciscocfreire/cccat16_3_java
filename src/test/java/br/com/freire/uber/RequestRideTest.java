@@ -96,9 +96,36 @@ public class RequestRideTest {
                 BigDecimal.valueOf(-27.496887588317275),
                 BigDecimal.valueOf(-48.522234807851476));
 
-        ValidationError validationError = assertThrows(ValidationError.class, () -> requestRide.execute(objectMapper.convertValue(inputRequestRide, new TypeReference<>() {
-        })));
+        ValidationError validationError = assertThrows(ValidationError.class, () -> requestRide.execute(inputRequestRide));
 
+        assertEquals(expectedError, validationError.getErrorCode());
+    }
+
+    @Test
+    @DisplayName("Não deve poder solicitar uma corrida se o passageiro já tiver outra corrida ativa")
+    public void naoDeveSolicitarCorridaSePassageiroTiverOutraCorridaAtiva() {
+        //Given
+        String expectedName = "John Doe";
+        String expectedEmail = "john.doe" + Math.random() + "@gmail.com";
+        String expectedCpf = "87748248800";
+        int expectedError = -7;
+        SignupRequest request = new SignupRequest();
+        request.setName(expectedName);
+        request.setEmail(expectedEmail);
+        request.setCpf(expectedCpf);
+        request.setPassenger(true);
+        request.setDriver(false);
+        SignupResponse outputSignup = signup.execute(objectMapper.convertValue(request, new TypeReference<>() {
+        }));
+        var requestRide = new ResquestRide(accountDAO, rideDAO);
+        ResquestRide.InputRequestRide inputRequestRide = new ResquestRide.InputRequestRide(
+                outputSignup.getAccountId(),
+                BigDecimal.valueOf(-27.584905257808835),
+                BigDecimal.valueOf(-48.545022195325124),
+                BigDecimal.valueOf(-27.496887588317275),
+                BigDecimal.valueOf(-48.522234807851476));
+        requestRide.execute(inputRequestRide);
+        ValidationError validationError = assertThrows(ValidationError.class, () -> requestRide.execute(inputRequestRide));
         assertEquals(expectedError, validationError.getErrorCode());
     }
 }

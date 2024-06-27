@@ -38,10 +38,17 @@ public class RideDAODatabase implements RideDAO {
         }
     }
 
-/*    @Override
+    @Override
     public boolean hasActiveRideByPassengerId(String passengerId) {
-        return false;
-    }*/
+        String sql = "SELECT * FROM cccat16.ride WHERE passenger_id = ? and status <> 'completed'";
+        try {
+            jdbcTemplate.queryForMap(sql, UUID.fromString(passengerId));
+            return true;
+        } catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+
+    }
 
     private Ride convertMapToRide(Map<String, Object> result) {
         if (result == null) return null;
