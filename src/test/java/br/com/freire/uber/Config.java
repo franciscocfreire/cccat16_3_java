@@ -1,7 +1,7 @@
 package br.com.freire.uber;
 
-import br.com.freire.uber.resource.AccountDAO;
-import br.com.freire.uber.resource.AccountDAOMemory;
+import br.com.freire.uber.resource.AccountRepository;
+import br.com.freire.uber.resource.AccountRepositoryMemory;
 import br.com.freire.uber.resource.MailerGateway;
 import br.com.freire.uber.resource.MailerGatewayMemory;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +16,7 @@ public class Config {
     }
 
     @Bean
-    public AccountDAO accountDAO(){
-        return new AccountDAOMemory();
+    public AccountRepository accountRepository(){
+        return new AccountRepositoryMemory();
     }
 }

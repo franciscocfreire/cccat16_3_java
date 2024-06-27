@@ -10,11 +10,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class AccountDAODatabase implements AccountDAO {
+public class AccountRepositoryDatabase implements AccountRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public AccountDAODatabase(JdbcTemplate jdbcTemplate) {
+    public AccountRepositoryDatabase(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

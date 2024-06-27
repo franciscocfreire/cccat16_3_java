@@ -24,9 +24,9 @@ public class Cli {
         dataSource.setUsername("postgres");
         dataSource.setPassword("123456");
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        AccountDAO accountDAO = new AccountDAODatabase(jdbcTemplate);
+        AccountRepository accountRepository = new AccountRepositoryDatabase(jdbcTemplate);
         MailerGateway mailerGateway = new MailerGatewayMemory();
-        Resource resource = new Resource(accountDAO);
+        Resource resource = new Resource(accountRepository);
         Signup signup = new Signup(resource, mailerGateway);
 
         while (true) {

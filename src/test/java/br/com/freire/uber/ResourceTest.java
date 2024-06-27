@@ -23,7 +23,7 @@ class ResourceTest {
     @Test
     @DisplayName("Deve salvar um registro na tabela account e consultar por id")
     void deveSalvarUmRegistroNaTabelaAccountEConsultarPorId() {
-        String expectedName = "John";
+        String expectedName = "John Doe";
         String expectedEmail = "john.doe" + Math.random() + "@gmail.com";
         String expectedCpf = "87748248800";
 
@@ -45,7 +45,7 @@ class ResourceTest {
     @Test
     @DisplayName("Deve salvar um registro na tabela account e consultar por id")
     void deveSalvarUmRegistroNaTabelaAccountEConsultarPorEmail() {
-        String expectedName = "John";
+        String expectedName = "John Doe";
         String expectedEmail = "john.doe" + Math.random() + "@gmail.com";
         String expectedCpf = "87748248800";
         String expectedCarPlate = null;

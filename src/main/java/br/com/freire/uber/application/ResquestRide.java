@@ -1,6 +1,6 @@
 package br.com.freire.uber.application;
 
-import br.com.freire.uber.resource.AccountDAO;
+import br.com.freire.uber.resource.AccountRepository;
 import br.com.freire.uber.resource.RideRepository;
 
 import java.math.BigDecimal;
@@ -8,17 +8,17 @@ import java.util.UUID;
 
 public class ResquestRide {
 
-    AccountDAO accountDAO;
+    AccountRepository accountRepository;
     RideRepository rideRepository;
 
-    public ResquestRide(AccountDAO accountDAO, RideRepository rideRepository) {
-        this.accountDAO = accountDAO;
+    public ResquestRide(AccountRepository accountRepository, RideRepository rideRepository) {
+        this.accountRepository = accountRepository;
         this.rideRepository = rideRepository;
     }
 
     public OutputRequestRide execute(InputRequestRide input) {
 
-        var optionalAccount = accountDAO.getAccountById(UUID.fromString(input.passengerId));
+        var optionalAccount = accountRepository.getAccountById(UUID.fromString(input.passengerId));
         if (optionalAccount.isEmpty()) {
             throw new ValidationError("Account not found", -5);
         }

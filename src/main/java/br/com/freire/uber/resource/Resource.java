@@ -10,24 +10,24 @@ import java.util.UUID;
 
 @Repository
 public class Resource {
-    private final AccountDAO accountDAO;
+    private final AccountRepository accountRepository;
 
-    public Resource(AccountDAO accountDAO) {
-        this.accountDAO = accountDAO;
+    public Resource(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
 
     public Optional<Map<String, Object>> getAccountByEmail(String email) {
-        return accountDAO.getAccountByEmail(email)
+        return accountRepository.getAccountByEmail(email)
                 .map(this::convertAccountToMap);
     }
 
     public Optional<Map<String, Object>> getAccountById(UUID accountId) {
-        return accountDAO.getAccountById(accountId)
+        return accountRepository.getAccountById(accountId)
                 .map(this::convertAccountToMap);
     }
 
     public UUID saveAccount(Account account) {
-        return accountDAO.saveAccount(account);
+        return accountRepository.saveAccount(account);
     }
 
     private Map<String, Object> convertAccountToMap(Account account) {

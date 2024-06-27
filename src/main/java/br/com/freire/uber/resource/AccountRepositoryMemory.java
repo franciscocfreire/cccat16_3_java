@@ -7,12 +7,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-public class AccountDAOMemory implements AccountDAO {
+public class AccountRepositoryMemory implements AccountRepository {
 
     Map<UUID, Account> mapAccountByAccountId;
     Map<String, Account> mapAccountByAccountEmail;
 
-    public AccountDAOMemory() {
+    public AccountRepositoryMemory() {
         this.mapAccountByAccountId = new HashMap<>();
         this.mapAccountByAccountEmail = new HashMap<>();
     }
