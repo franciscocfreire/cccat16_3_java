@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -44,7 +46,7 @@ public class SignupTest {
         assertNotNull(responseSignup);
         assertNotNull(responseSignup.getAccountId());
 
-        Account account = getAccount.getAccount(responseSignup.getAccountId());
+        Account account = getAccount.getAccount(UUID.fromString(responseSignup.getAccountId()));
         assertEquals(expectedName, account.getName());
         assertEquals(expectedEmail, account.getEmail());
         assertEquals(expectedCpf, account.getCpf());
@@ -66,10 +68,8 @@ public class SignupTest {
         request.setPassenger(true);
         request.setDriver(false);
 
-        ValidationError validationError = assertThrows(ValidationError.class, () -> {
-            signup.execute(objectMapper.convertValue(request, new TypeReference<>() {
-            }));
-        });
+        ValidationError validationError = assertThrows(ValidationError.class, () -> signup.execute(objectMapper.convertValue(request, new TypeReference<>() {
+        })));
 
         assertEquals(expectedError, validationError.getErrorCode());
     }
@@ -97,7 +97,7 @@ public class SignupTest {
         assertNotNull(responseSignup);
         assertNotNull(responseSignup.getAccountId());
 
-        Account account = getAccount.getAccount(responseSignup.getAccountId());
+        Account account = getAccount.getAccount(UUID.fromString(responseSignup.getAccountId()));
         assertEquals(expectedName, account.getName());
         assertEquals(expectedEmail, account.getEmail());
         assertEquals(expectedCpf, account.getCpf());

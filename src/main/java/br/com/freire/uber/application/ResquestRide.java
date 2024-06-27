@@ -1,7 +1,7 @@
 package br.com.freire.uber.application;
 
 import br.com.freire.uber.resource.AccountDAO;
-import br.com.freire.uber.resource.RideDAO;
+import br.com.freire.uber.resource.RideRepository;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -9,16 +9,16 @@ import java.util.UUID;
 public class ResquestRide {
 
     AccountDAO accountDAO;
-    RideDAO rideDAO;
+    RideRepository rideRepository;
 
-    public ResquestRide(AccountDAO accountDAO, RideDAO rideDAO) {
+    public ResquestRide(AccountDAO accountDAO, RideRepository rideRepository) {
         this.accountDAO = accountDAO;
-        this.rideDAO = rideDAO;
+        this.rideRepository = rideRepository;
     }
 
     public OutputRequestRide execute(InputRequestRide input) {
 
-        var optionalAccount = accountDAO.getAccountById(input.passengerId);
+        var optionalAccount = accountDAO.getAccountById(UUID.fromString(input.passengerId));
         if (optionalAccount.isEmpty()) {
             throw new ValidationError("Account not found", -5);
         }
@@ -27,7 +27,7 @@ public class ResquestRide {
         if (!account.isPassenger()) {
             throw new ValidationError("Account is not from passenger", -6);
         }
-        var hasActiveRide = rideDAO.hasActiveRideByPassengerId(account.getAccountId());
+        var hasActiveRide = rideRepository.hasActiveRideByPassengerId(account.getAccountId());
         if (hasActiveRide) throw new ValidationError("Passenger has an active ride", -7);
         Ride ride = Ride.create(
                 UUID.fromString(input.passengerId),
@@ -36,7 +36,7 @@ public class ResquestRide {
                 input.toLat,
                 input.toLong
         );
-        rideDAO.saveRide(ride);
+        rideRepository.saveRide(ride);
 
         return new OutputRequestRide(ride.getRideId().toString());
     }

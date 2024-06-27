@@ -21,19 +21,19 @@ public class Resource {
                 .map(this::convertAccountToMap);
     }
 
-    public Optional<Map<String, Object>> getAccountById(String accountId) {
+    public Optional<Map<String, Object>> getAccountById(UUID accountId) {
         return accountDAO.getAccountById(accountId)
                 .map(this::convertAccountToMap);
     }
 
-    public String saveAccount(Account account) {
+    public UUID saveAccount(Account account) {
         return accountDAO.saveAccount(account);
     }
 
     private Map<String, Object> convertAccountToMap(Account account) {
         if (account == null) return null;
         Map<String, Object> accountMap = new HashMap<>();
-        accountMap.put("account_id", UUID.fromString(account.getAccountId()));
+        accountMap.put("account_id", account.getAccountId());
         accountMap.put("name", account.getName());
         accountMap.put("email", account.getEmail());
         accountMap.put("cpf", account.getCpf());

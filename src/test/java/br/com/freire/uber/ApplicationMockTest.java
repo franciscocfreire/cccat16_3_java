@@ -21,10 +21,10 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension .class)
+@ExtendWith(MockitoExtension.class)
 public class ApplicationMockTest {
 
     @Mock
@@ -57,8 +57,8 @@ public class ApplicationMockTest {
                 "is_driver", false
         );
 
-        when(resource.getAccountById(anyString())).thenReturn(Optional.of(mockResult));
-
+        when(resource.getAccountById(any(UUID.class))).thenReturn(Optional.of(mockResult));
+        when(resource.saveAccount(any(Account.class))).thenReturn(UUID.randomUUID());
         Signup signup = new Signup(resource, mailerGateway);
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -70,7 +70,7 @@ public class ApplicationMockTest {
 
         GetAccount getAccount = new GetAccount(resource);
 
-        Account account = getAccount.getAccount(responseSignup.getAccountId());
+        Account account = getAccount.getAccount(UUID.fromString(responseSignup.getAccountId()));
         assertEquals(expectedName, account.getName());
         assertEquals(expectedEmail, account.getEmail());
         assertEquals(expectedCpf, account.getCpf());

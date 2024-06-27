@@ -27,7 +27,6 @@ public class Signup {
 
     public SignupResponse execute(Map<String, String> request) {
         SignupRequest input = objectMapper.convertValue(request, SignupRequest.class);
-        UUID accountId = UUID.randomUUID();
         var existingAccount = resource.getAccountByEmail(input.getEmail());
         if (existingAccount.isPresent()) throw new ValidationError("Account already exist", -4);
         if (!(Pattern.matches("[a-zA-Z]+ [a-zA-Z]+", input.getName()))) throw new ValidationError("Invalid name", -3);
@@ -35,21 +34,13 @@ public class Signup {
         if (!validateCpf(input.getCpf())) throw new ValidationError("Invalid CPF", -1);
         if (input.isDriver() && !input.getCarPlate().isEmpty() && !Pattern.matches("[A-Z]{3}[0-9]{4}", input.getCarPlate()))
             throw new ValidationError("Invalid car plate", -5);
-        resource.saveAccount(mapperInputToAccount(input, accountId.toString()));
+        UUID accountId = resource.saveAccount(mapperInputToAccount(input));
         mailerGateway.send(input.getEmail(), "Welcome", "");
         return new SignupResponse(accountId.toString());
     }
 
-    private Account mapperInputToAccount(SignupRequest input, String accountId) {
-        Account account = new Account();
-        account.setAccountId(accountId);
-        account.setCpf(input.getCpf());
-        account.setDriver(input.isDriver());
-        account.setEmail(input.getEmail());
-        account.setPassenger(input.isPassenger());
-        account.setCarPlate(input.getCarPlate());
-        account.setName(input.getName());
-        return account;
+    private Account mapperInputToAccount(SignupRequest input) {
+        return Account.create(input.getName(), input.getEmail(), input.getCpf(), input.getCarPlate(), input.isPassenger(), input.isDriver() );
     }
 
     private boolean validateCpf(String cpf) {

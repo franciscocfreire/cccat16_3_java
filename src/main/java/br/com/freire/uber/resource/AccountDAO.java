@@ -2,13 +2,13 @@ package br.com.freire.uber.resource;
 
 import br.com.freire.uber.application.Account;
 
-import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface AccountDAO {
     Optional<Account> getAccountByEmail(String email);
 
-    Optional<Account> getAccountById(String accountId);
+    Optional<Account> getAccountById(UUID accountId);
 
-    String saveAccount(Account account);
+    UUID saveAccount(Account account);
 }

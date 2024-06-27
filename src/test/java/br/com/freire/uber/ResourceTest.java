@@ -27,16 +27,9 @@ class ResourceTest {
         String expectedEmail = "john.doe" + Math.random() + "@gmail.com";
         String expectedCpf = "87748248800";
 
-        Account account = new Account();
-        account.setAccountId(UUID.randomUUID().toString());
+        Account account = Account.create(expectedName, expectedEmail,expectedCpf, null,true, false );
 
-        account.setName(expectedName);
-        account.setEmail(expectedEmail);
-        account.setCpf(expectedCpf);
-        account.setPassenger(true);
-        account.setDriver(false);
-
-        String accountId = resource.saveAccount(account);
+        UUID accountId = resource.saveAccount(account);
 
         Optional<Map<String, Object>> optionalSavedAccountById = resource.getAccountById(accountId);
 
@@ -55,15 +48,11 @@ class ResourceTest {
         String expectedName = "John";
         String expectedEmail = "john.doe" + Math.random() + "@gmail.com";
         String expectedCpf = "87748248800";
+        String expectedCarPlate = null;
+        boolean expectedIsPassenger = true;
+        boolean expectedIsDriver = false;
 
-        Account account = new Account();
-        account.setAccountId(UUID.randomUUID().toString());
-        account.setName(expectedName);
-        account.setEmail(expectedEmail);
-        account.setCpf(expectedCpf);
-        account.setPassenger(true);
-        account.setDriver(false);
-
+        Account account = Account.create(expectedName, expectedEmail, expectedCpf, expectedCarPlate, expectedIsPassenger, expectedIsDriver);
         resource.saveAccount(account);
 
         Optional<Map<String, Object>> optionalSavedAccountByEmail = resource.getAccountByEmail(expectedEmail);

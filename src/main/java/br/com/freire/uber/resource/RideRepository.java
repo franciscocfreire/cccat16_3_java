@@ -3,10 +3,11 @@ package br.com.freire.uber.resource;
 import br.com.freire.uber.application.Ride;
 
 import java.util.Optional;
+import java.util.UUID;
 
-public interface RideDAO {
+public interface RideRepository {
     void saveRide(Ride ride);
 
     Optional<Ride> getRideById(String rideId);
-    boolean hasActiveRideByPassengerId(String passengerId);
+    boolean hasActiveRideByPassengerId(UUID passengerId);
 }

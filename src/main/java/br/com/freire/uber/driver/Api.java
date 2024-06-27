@@ -6,9 +6,10 @@ import br.com.freire.uber.application.Signup;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 public class Api {
@@ -34,7 +35,7 @@ public class Api {
 
     @GetMapping("/accounts/{accountId}")
     public ResponseEntity<?> getAccount(@PathVariable String accountId) {
-        Account account = getAccount.getAccount(accountId);
+        Account account = getAccount.getAccount(UUID.fromString(accountId));
         if (account != null) return ResponseEntity.ok(account);
         return ResponseEntity.notFound().build();
     }

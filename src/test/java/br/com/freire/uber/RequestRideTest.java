@@ -7,7 +7,7 @@ import br.com.freire.uber.application.ValidationError;
 import br.com.freire.uber.driver.SignupRequest;
 import br.com.freire.uber.driver.SignupResponse;
 import br.com.freire.uber.resource.AccountDAO;
-import br.com.freire.uber.resource.RideDAO;
+import br.com.freire.uber.resource.RideRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +29,7 @@ public class RequestRideTest {
     @Autowired
     AccountDAO accountDAO;
     @Autowired
-    RideDAO rideDAO;
+    RideRepository rideRepository;
 
     @Test
     @DisplayName("Deve solicitar uma corrida")
@@ -46,7 +46,7 @@ public class RequestRideTest {
         request.setDriver(false);
         SignupResponse outputSignup = signup.execute(objectMapper.convertValue(request, new TypeReference<>() {
         }));
-        var requestRide = new ResquestRide(accountDAO, rideDAO);
+        var requestRide = new ResquestRide(accountDAO, rideRepository);
         ResquestRide.InputRequestRide inputRequestRide = new ResquestRide.InputRequestRide(
                 outputSignup.getAccountId(),
                 BigDecimal.valueOf(-27.584905257808835),
@@ -55,7 +55,7 @@ public class RequestRideTest {
                 BigDecimal.valueOf(-48.522234807851476));
         var outputRequestRide = requestRide.execute(inputRequestRide);
         assertNotNull(outputRequestRide.rideId());
-        var getRide = new GetRide(accountDAO, rideDAO);
+        var getRide = new GetRide(accountDAO, rideRepository);
         var inputGetRide = new GetRide.InputGetRide(outputRequestRide.rideId());
         //When
         var outputGetRide = getRide.execute(inputGetRide);
@@ -88,7 +88,7 @@ public class RequestRideTest {
         request.setCarPlate("AAA9999");
         SignupResponse responseSignup = signup.execute(objectMapper.convertValue(request, new TypeReference<>() {
         }));
-        var requestRide = new ResquestRide(accountDAO, rideDAO);
+        var requestRide = new ResquestRide(accountDAO, rideRepository);
         ResquestRide.InputRequestRide inputRequestRide = new ResquestRide.InputRequestRide(
                 responseSignup.getAccountId(),
                 BigDecimal.valueOf(-27.584905257808835),
@@ -117,7 +117,7 @@ public class RequestRideTest {
         request.setDriver(false);
         SignupResponse outputSignup = signup.execute(objectMapper.convertValue(request, new TypeReference<>() {
         }));
-        var requestRide = new ResquestRide(accountDAO, rideDAO);
+        var requestRide = new ResquestRide(accountDAO, rideRepository);
         ResquestRide.InputRequestRide inputRequestRide = new ResquestRide.InputRequestRide(
                 outputSignup.getAccountId(),
                 BigDecimal.valueOf(-27.584905257808835),

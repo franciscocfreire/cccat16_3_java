@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class AccountDAOMemory implements AccountDAO {
 
-    Map<String, Account> mapAccountByAccountId;
+    Map<UUID, Account> mapAccountByAccountId;
     Map<String, Account> mapAccountByAccountEmail;
 
     public AccountDAOMemory() {
@@ -23,28 +23,14 @@ public class AccountDAOMemory implements AccountDAO {
     }
 
     @Override
-    public Optional<Account> getAccountById(String accountId) {
+    public Optional<Account> getAccountById(UUID accountId) {
         return Optional.ofNullable(this.mapAccountByAccountId.get(accountId));
     }
 
     @Override
-    public String saveAccount(Account account) {
+    public UUID saveAccount(Account account) {
         this.mapAccountByAccountId.put(account.getAccountId(), account);
         this.mapAccountByAccountEmail.put(account.getEmail(), account);
         return account.getAccountId();
-    }
-
-    private Map<String, Object> convertAccountToMap(Account account) {
-        if (account == null) return null;
-        Map<String, Object> accountMap = new HashMap<>();
-        accountMap.put("account_id", UUID.fromString(account.getAccountId()));
-        accountMap.put("name", account.getName());
-        accountMap.put("email", account.getEmail());
-        accountMap.put("cpf", account.getCpf());
-        accountMap.put("car_plate", account.getCarPlate());
-        accountMap.put("is_passenger", account.isPassenger());
-        accountMap.put("is_driver", account.isDriver());
-
-        return accountMap;
     }
 }

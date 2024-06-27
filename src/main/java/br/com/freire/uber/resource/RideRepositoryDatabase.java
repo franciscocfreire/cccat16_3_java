@@ -13,11 +13,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class RideDAODatabase implements RideDAO {
+public class RideRepositoryDatabase implements RideRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public RideDAODatabase(JdbcTemplate jdbcTemplate) {
+    public RideRepositoryDatabase(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -40,10 +40,10 @@ public class RideDAODatabase implements RideDAO {
     }
 
     @Override
-    public boolean hasActiveRideByPassengerId(String passengerId) {
+    public boolean hasActiveRideByPassengerId(UUID passengerId) {
         String sql = "SELECT * FROM cccat16.ride WHERE passenger_id = ? and status <> 'completed'";
         try {
-            jdbcTemplate.queryForMap(sql, UUID.fromString(passengerId));
+            jdbcTemplate.queryForMap(sql, UUID.fromString(passengerId.toString()));
             return true;
         } catch (EmptyResultDataAccessException e) {
             return false;

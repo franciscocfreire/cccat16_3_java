@@ -1,69 +1,35 @@
 package br.com.freire.uber.application;
 
+import lombok.Getter;
+
+import java.util.UUID;
+
+@Getter
 public class Account {
-    private String accountId;
-    private String name;
-    private String email;
-    private String cpf;
-    private String carPlate;
-    private boolean isPassenger;
-    private boolean isDriver;
+    private final UUID accountId;
+    private final String name;
+    private final String email;
+    private final String cpf;
+    private final String carPlate;
+    private final boolean isPassenger;
+    private final boolean isDriver;
 
-    // Getters e Setters
-
-    public String getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(String accountId) {
+    private Account(UUID accountId, String name, String email, String cpf, String carPlate, boolean isPassenger, boolean isDriver) {
         this.accountId = accountId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public String getCarPlate() {
-        return carPlate;
-    }
-
-    public void setCarPlate(String carPlate) {
         this.carPlate = carPlate;
-    }
-
-    public boolean isPassenger() {
-        return isPassenger;
-    }
-
-    public void setPassenger(boolean isPassenger) {
         this.isPassenger = isPassenger;
-    }
-
-    public boolean isDriver() {
-        return isDriver;
-    }
-
-    public void setDriver(boolean isDriver) {
         this.isDriver = isDriver;
     }
+
+    public static Account create(String name, String email, String cpf, String carPlate, boolean isPassenger, boolean isDriver) {
+        return new Account(UUID.randomUUID(), name, email, cpf, carPlate, isPassenger, isDriver);
+    }
+
+    public static Account restore(UUID accountId, String name, String email, String cpf, String carPlate, boolean isPassenger, boolean isDriver) {
+        return new Account(accountId, name, email, cpf, carPlate, isPassenger, isDriver);
+    }
+
 }

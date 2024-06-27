@@ -13,18 +13,15 @@ public class GetAccount {
         this.resource = resource;
     }
 
-    public Account getAccount(String accountId) {
-        return resource.getAccountById(accountId).map(result -> {
-                    Account account = new Account();
-                    account.setAccountId(((UUID) result.get("account_id")).toString());
-                    account.setName((String) result.get("name"));
-                    account.setEmail((String) result.get("email"));
-                    account.setCpf((String) result.get("cpf"));
-                    account.setCarPlate((String) result.get("car_plate"));
-                    account.setPassenger((Boolean) result.get("is_passenger"));
-                    account.setDriver((Boolean) result.get("is_driver"));
-                    return account;
-                })
+    public Account getAccount(UUID accountId) {
+        return resource.getAccountById(accountId).map(result -> Account.restore(
+                ((UUID) result.get("account_id")),
+                (String) result.get("name"),
+                (String) result.get("email"),
+                (String) result.get("cpf"),
+                (String) result.get("car_plate"),
+                (Boolean) result.get("is_passenger"),
+                (Boolean) result.get("is_driver")))
                 .orElse(null);
     }
 }

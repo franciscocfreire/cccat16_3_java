@@ -31,10 +31,10 @@ public class AccountDAODatabase implements AccountDAO {
     }
 
     @Override
-    public Optional<Account> getAccountById(String accountId) {
+    public Optional<Account> getAccountById(UUID accountId) {
         String sql = "SELECT * FROM cccat16.account WHERE account_id = ?";
         try {
-            Map<String, Object> result = jdbcTemplate.queryForMap(sql, UUID.fromString(accountId));
+            Map<String, Object> result = jdbcTemplate.queryForMap(sql, accountId);
             Account account = convertMapToAccount(result);
             return Optional.of(account);
         } catch (EmptyResultDataAccessException e) {
@@ -43,24 +43,24 @@ public class AccountDAODatabase implements AccountDAO {
     }
 
     @Override
-    public String saveAccount(Account account) {
+    public UUID saveAccount(Account account) {
         jdbcTemplate.update("INSERT INTO cccat16.account (account_id, name, email, cpf, car_plate, is_passenger, is_driver) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                UUID.fromString(account.getAccountId()), account.getName(), account.getEmail(), account.getCpf(), account.getCarPlate(), account.isPassenger(), account.isDriver());
+                account.getAccountId(), account.getName(), account.getEmail(), account.getCpf(), account.getCarPlate(), account.isPassenger(), account.isDriver());
 
         return account.getAccountId();
     }
 
     private Account convertMapToAccount(Map<String, Object> result) {
         if (result == null) return null;
-        Account account = new Account();
-        account.setAccountId(((UUID) result.get("account_id")).toString());
-        account.setName((String) result.get("name"));
-        account.setEmail((String) result.get("email"));
-        account.setCpf((String) result.get("cpf"));
-        account.setCarPlate((String) result.get("car_plate"));
-        account.setPassenger((Boolean) result.get("is_passenger"));
-        account.setDriver((Boolean) result.get("is_driver"));
-        return account;
+        return Account.restore(
+                ((UUID) result.get("account_id")),
+                (String) result.get("name"),
+                (String) result.get("email"),
+                (String) result.get("cpf"),
+                (String) result.get("car_plate"),
+                (Boolean) result.get("is_passenger"),
+                (Boolean) result.get("is_driver")
+        );
     }
 
 
